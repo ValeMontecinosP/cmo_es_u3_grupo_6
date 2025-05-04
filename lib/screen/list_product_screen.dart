@@ -18,12 +18,16 @@ class _ListProductScreenState extends State<ListProductScreen> {
   List<Listado> _filteredProducts = [];
   final TextEditingController _searchController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
+@override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
     final productService = Provider.of<ProductService>(context, listen: false);
-    _filteredProducts = productService.products;
-  }
+    setState(() {
+      _filteredProducts = productService.products;
+    });
+  });
+}
 
   void _filterProducts(String query, List<Listado> allProducts) {
     final filtered = allProducts.where((product) {
@@ -123,8 +127,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
                           trailing: IconButton(
                             icon: const Icon(Icons.add_shopping_cart),
                             onPressed: () {
-                              Provider.of<CartProvider>(context, listen: false)
-                                  .addItem();
+                              Provider.of<CartProvider>(context, listen: false).addItem(product);
                             },
                           ),
                         ),

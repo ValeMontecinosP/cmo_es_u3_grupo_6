@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/models/productos.dart';
 
 class CartProvider extends ChangeNotifier {
-  int _itemCount = 0;
+  final List<Listado> _items = [];
 
-  int get itemCount => _itemCount;
+  List<Listado> get items => _items;
 
-  get items => null;
+  int get itemCount => _items.length;
 
-  void addItem() {
-    _itemCount++;
+  double get total =>
+      _items.fold(0, (sum, item) => sum + item.productPrice);
+
+  void addItem(Listado product) {
+    _items.add(product);
+    notifyListeners();
+  }
+
+  void removeItem(Listado product) {
+    _items.remove(product);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _items.clear();
     notifyListeners();
   }
 }
