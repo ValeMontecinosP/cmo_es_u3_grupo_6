@@ -5,6 +5,8 @@ class CartProvider extends ChangeNotifier {
 
   int get itemCount => _itemCount;
 
+  get items => null;
+
   void addItem() {
     _itemCount++;
     notifyListeners();

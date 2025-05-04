@@ -38,7 +38,7 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(25),
           boxShadow: const [
             BoxShadow(
-              color: Colors.black,
+              color: Colors.white,
               offset: Offset(0, 5),
               blurRadius: 10,
             )
@@ -57,7 +57,7 @@ class _PriceTag extends StatelessWidget {
       height: 70,
       alignment: Alignment.center,
       decoration: const BoxDecoration(
-          color: Colors.orange,
+          color: Colors.blue,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(25), bottomLeft: Radius.circular(25))),
       child: FittedBox(
@@ -136,7 +136,7 @@ class _ProductDetails extends StatelessWidget {
   }
 
   BoxDecoration _boxDecorations() => const BoxDecoration(
-      color: Colors.orange,
+      color: Colors.blue,
       borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(25), topRight: Radius.circular(25)));
 }

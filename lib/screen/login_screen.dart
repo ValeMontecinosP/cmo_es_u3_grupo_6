@@ -15,13 +15,13 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 150,
+                height: 170,
               ),
               CardContainer(
                   child: Column(children: [
                 const SizedBox(height: 10),
                 Text(
-                  'Login',
+                  'Inicia sesión',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(height: 30),
@@ -37,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                       overlayColor: MaterialStateProperty.all(
                           Colors.indigo.withOpacity(0.1)),
                       shape: MaterialStateProperty.all(StadiumBorder())),
-                  child: const Text('No tienes una cuenta?, creala'),
+                  child: const Text('¿No tienes cuenta? Regístrate aquí'),
                 )
               ])),
             ],
@@ -63,7 +63,7 @@ class LoginForm extends StatelessWidget {
             autocorrect: false,
             keyboardType: TextInputType.text,
             decoration: InputDecortions.authInputDecoration(
-              hinText: 'Ingrese su correo',
+              hinText: 'Ingresa su correo',
               labelText: 'Email',
               prefixIcon: Icons.people,
             ),
@@ -71,7 +71,7 @@ class LoginForm extends StatelessWidget {
             validator: (value) {
               return (value != null && value.length >= 4)
                   ? null
-                  : 'El usuario no puede estar vacio';
+                  : 'El usuario no puede estar vacío';
             },
           ),
           const SizedBox(height: 30),
@@ -88,7 +88,7 @@ class LoginForm extends StatelessWidget {
             validator: (value) {
               return (value != null && value.length >= 4)
                   ? null
-                  : 'La contraseña no puede estar vacio';
+                  : 'La contraseña no puede estar vacía';
             },
           ),
           const SizedBox(height: 30),
@@ -97,7 +97,7 @@ class LoginForm extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             disabledColor: Colors.grey,
-            color: Colors.orange,
+            color: Colors.blue,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
               child: Text(

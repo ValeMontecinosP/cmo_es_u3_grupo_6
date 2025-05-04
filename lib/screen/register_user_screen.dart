@@ -15,13 +15,13 @@ class RegisterUserScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 150,
+                height: 160,
               ),
               CardContainer(
                   child: Column(children: [
                 const SizedBox(height: 10),
                 Text(
-                  'Registra una cuenta',
+                  'Crea tu cuenta',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(height: 30),
@@ -37,7 +37,7 @@ class RegisterUserScreen extends StatelessWidget {
                       overlayColor: MaterialStateProperty.all(
                           Colors.indigo.withOpacity(0.1)),
                       shape: MaterialStateProperty.all(StadiumBorder())),
-                  child: const Text('¿Ya tienes una cuenta?, autentificate'),
+                  child: const Text('¿Ya tienes una cuenta? Inicia sesión aquí'),
                 )
               ])),
             ],
@@ -71,7 +71,7 @@ class RegisterForm extends StatelessWidget {
             validator: (value) {
               return (value != null && value.length >= 4)
                   ? null
-                  : 'El usuario no puede estar vacio';
+                  : 'El usuario no puede estar vacío';
             },
           ),
           const SizedBox(height: 30),
@@ -88,7 +88,7 @@ class RegisterForm extends StatelessWidget {
             validator: (value) {
               return (value != null && value.length >= 4)
                   ? null
-                  : 'La contraseña no puede estar vacio';
+                  : 'La contraseña no puede estar vacía';
             },
           ),
           const SizedBox(height: 30),
@@ -97,7 +97,7 @@ class RegisterForm extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             disabledColor: Colors.grey,
-            color: Colors.orange,
+            color: Colors.blue,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
               child: Text(

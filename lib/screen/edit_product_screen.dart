@@ -112,7 +112,7 @@ class _ProductForm extends StatelessWidget {
                 onChanged: (value) => product.productName = value,
                 validator: (value) {
                   if (value == null || value.length < 1)
-                    return 'el nombre es obligatorio';
+                    return 'El nombre es obligatorio';
                 },
                 decoration: InputDecortions.authInputDecoration(
                   hinText: 'Nombre del producto',
@@ -139,7 +139,7 @@ class _ProductForm extends StatelessWidget {
               SwitchListTile.adaptive(
                 value: true,
                 onChanged: (value) {},
-                activeColor: Colors.orange,
+                activeColor: Colors.blue,
                 title: const Text('Disponible'),
               )
             ],

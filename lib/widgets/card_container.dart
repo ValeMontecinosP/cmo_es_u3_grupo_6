@@ -23,5 +23,5 @@ BoxDecoration cardDecoration() => BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
-          BoxShadow(color: Colors.black, blurRadius: 15, offset: Offset(0, 5)),
+          BoxShadow(color: Colors.white, blurRadius: 15, offset: Offset(0, 5)),
         ]);
