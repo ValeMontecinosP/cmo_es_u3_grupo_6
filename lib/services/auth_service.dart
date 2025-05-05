@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+
+
 
 class AuthService extends ChangeNotifier {
   final String _baseUrl = 'identitytoolkit.googleapis.com';
-  final String _firebaseToken = 'AIzaSyCwQYMMlROaHlO12wGuTuIwBxTezL2iBdU';
+  final String _firebaseToken = 'AIzaSyDrAmk9flDHMlnoUMABVa6f5bFu5LcoC8I';
 
   Future<String?> login(String email, String password) async {
     final Map<String, dynamic> authData = {
@@ -23,7 +26,17 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<String?> create_user(String email, String password) async {
+  Future<String?> forgotPassword(String email) async {
+  try {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    print("Password reset email sent to $email"); // Replace with a UI notification
+  } catch (e) {
+    print("Error sending password reset email: $e"); // Replace with a UI error message
+  }
+}
+
+
+  Future<String?> createUser(String email, String password) async {
     final Map<String, dynamic> authData = {
       'email': email,
       'password': password,

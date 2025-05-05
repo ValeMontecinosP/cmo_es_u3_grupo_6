@@ -114,7 +114,7 @@ class RegisterForm extends StatelessWidget {
                         Provider.of<AuthService>(context, listen: false);
                     if (!LoginForm.isValidForm()) return;
                     LoginForm.isLoading = true;
-                    final String? errorMessage = await authService.create_user(
+                    final String? errorMessage = await authService.createUser(
                         LoginForm.email, LoginForm.password);
                     if (errorMessage == null) {
                       Navigator.pushNamed(context, 'login');

@@ -17,6 +17,7 @@ class ListProductScreen extends StatefulWidget {
 class _ListProductScreenState extends State<ListProductScreen> {
   List<Listado> _filteredProducts = [];
   final TextEditingController _searchController = TextEditingController();
+  String _selectedCategory = 'Todas';
 
 @override
 void initState() {
@@ -29,11 +30,16 @@ void initState() {
   });
 }
 
-  void _filterProducts(String query, List<Listado> allProducts) {
+  void _filterProducts(String query, String category, List<Listado> allProducts) {
     final filtered = allProducts.where((product) {
       final nameLower = product.productName.toLowerCase();
       final searchLower = query.toLowerCase();
-      return nameLower.contains(searchLower);
+      final categoryLower = product.productCategory?.toLowerCase() ?? 'Sin categoría';
+      final matchesSearch = nameLower.contains(searchLower);
+      final matchesCategory = category == 'Todas' ||
+          category.toLowerCase() == categoryLower;
+
+      return matchesSearch && matchesCategory;
     }).toList();
 
     setState(() {
@@ -47,6 +53,14 @@ void initState() {
     final cartProvider = Provider.of<CartProvider>(context);
 
     if (productService.isLoading) return const LoadingScreen();
+
+    final categories = <String>{
+      'Todas',
+      ...productService.products
+          .map((p) => p.productCategory ?? 'Sin categoría')
+          .toSet(),
+    }.toList();
+
 
     return Scaffold(
       appBar: AppBar(
@@ -107,10 +121,38 @@ void initState() {
                 ),
               ),
               onChanged: (value) {
-                _filterProducts(value, productService.products);
+                _filterProducts(value,  _selectedCategory, productService.products);
               },
             ),
           ),
+          // Filtro de categoría
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: DropdownButtonFormField<String>(
+              value: _selectedCategory,
+              items: categories.map((category) {
+                return DropdownMenuItem<String>(
+                  value: category,
+                  child: Text(category),
+                );
+              }).toList(),
+              decoration: const InputDecoration(
+                labelText: 'Filtrar por categoría',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() {
+                    _selectedCategory = value;
+                  });
+                  _filterProducts(
+                      _searchController.text, value, productService.products);
+                }
+              },
+            ),
+          ),
+          const SizedBox(height: 10),
+          // Lista de productos
           Expanded(
             child: _filteredProducts.isNotEmpty
                 ? ListView.builder(
@@ -150,6 +192,7 @@ void initState() {
             productImage:
                 'https://abravidro.org.br/wp-content/uploads/2015/04/sem-imagem4.jpg',
             productState: '',
+            productCategory: '', 
           );
           Navigator.pushNamed(context, 'edit');
         },

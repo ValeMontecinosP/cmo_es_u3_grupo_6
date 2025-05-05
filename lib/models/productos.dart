@@ -28,6 +28,7 @@ class Listado {
     required this.productPrice,
     required this.productImage,
     required this.productState,
+    required this.productCategory,
   });
 
   int productId;
@@ -35,6 +36,7 @@ class Listado {
   int productPrice;
   String productImage;
   String productState;
+  String? productCategory;
 
   factory Listado.fromJson(String str) => Listado.fromMap(json.decode(str));
 
@@ -46,6 +48,7 @@ class Listado {
         productPrice: json["product_price"],
         productImage: json["product_image"],
         productState: json["product_state"],
+        productCategory: json["product_category"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -54,6 +57,7 @@ class Listado {
         "product_price": productPrice,
         "product_image": productImage,
         "product_state": productState,
+        "product_category": productCategory,
       };
 
   Listado copy() => Listado(
@@ -61,5 +65,6 @@ class Listado {
       productName: productName,
       productPrice: productPrice,
       productImage: productImage,
-      productState: productState);
+      productState: productState,
+      productCategory: productCategory);
 }

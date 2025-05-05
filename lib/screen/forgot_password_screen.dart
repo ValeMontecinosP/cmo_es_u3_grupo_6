@@ -4,9 +4,10 @@ import 'package:flutter_application_3/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_3/providers/providers.dart';
 import '../ui/input_decorations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,35 +22,16 @@ class LoginScreen extends StatelessWidget {
                   child: Column(children: [
                 const SizedBox(height: 10),
                 Text(
-                  'Inicia sesión',
+                  'Recuperar contraseña',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(height: 30),
                 ChangeNotifierProvider(
-                  create: (_) => LoginFormProvider(),
-                  child: LoginForm(),
+                  create: (_) => ForgotPasswordFormProvider(),
+                  child: ForgotPasswordForm(),
                 ),
                 const SizedBox(height: 50),
-                TextButton(
-                  onPressed: () =>
-                      Navigator.pushReplacementNamed(context, 'add_user'),
-                  style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all(
-                          Colors.indigo.withOpacity(0.1)),
-                      shape: MaterialStateProperty.all(StadiumBorder())),
-                  child: const Text('¿No tienes cuenta? Regístrate aquí'),
-                ),
-                TextButton(
-                  onPressed: () => 
-                      Navigator.pushReplacementNamed(context,'forgot_password'),
-                  style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all(
-                          Colors.indigo.withOpacity(0.1)),
-                      shape: MaterialStateProperty.all(StadiumBorder())),
-                  child: const Text('¿Olvidaste tu contraseña?'),
-                )
-
-                
+                                
               ])),
             ],
           ),
@@ -59,26 +41,26 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({super.key});
+class ForgotPasswordForm extends StatelessWidget {
+  const ForgotPasswordForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final LoginForm = Provider.of<LoginFormProvider>(context);
+    final ForgotPasswordForm = Provider.of<ForgotPasswordFormProvider>(context);
     return Container(
       child: Form(
-        key: LoginForm.formKey,
+        key: ForgotPasswordForm.formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(children: [
           TextFormField(
             autocorrect: false,
             keyboardType: TextInputType.text,
             decoration: InputDecortions.authInputDecoration(
-              hinText: 'Ingresa su correo',
+              hinText: 'Ingresa tu correo',
               labelText: 'Email',
               prefixIcon: Icons.people,
             ),
-            onChanged: (value) => LoginForm.email = value,
+            onChanged: (value) => ForgotPasswordForm.email = value,
             validator: (value) {
               return (value != null && value.length >= 4)
                   ? null
@@ -86,22 +68,7 @@ class LoginForm extends StatelessWidget {
             },
           ),
           const SizedBox(height: 30),
-          TextFormField(
-            autocorrect: false,
-            obscureText: true,
-            keyboardType: TextInputType.text,
-            decoration: InputDecortions.authInputDecoration(
-              hinText: '************',
-              labelText: 'Password',
-              prefixIcon: Icons.lock_outline,
-            ),
-            onChanged: (value) => LoginForm.password = value,
-            validator: (value) {
-              return (value != null && value.length >= 4)
-                  ? null
-                  : 'La contraseña no puede estar vacía';
-            },
-          ),
+        
           const SizedBox(height: 30),
           MaterialButton(
             shape: RoundedRectangleBorder(
@@ -110,30 +77,30 @@ class LoginForm extends StatelessWidget {
             disabledColor: Colors.grey,
             color: Colors.blue,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Text(
-                'Ingresar',
+                'Recuperar contraseña',
                 style: const TextStyle(color: Colors.white),
               ),
             ),
             elevation: 0,
-            onPressed: LoginForm.isLoading
+            onPressed: ForgotPasswordForm.isLoading
                 ? null
                 : () async {
                     FocusScope.of(context).unfocus();
                     final authService =
                         Provider.of<AuthService>(context, listen: false);
-                    if (!LoginForm.isValidForm()) return;
-                    LoginForm.isLoading = true;
-                    final String? errorMessage = await authService.login(
-                        LoginForm.email, LoginForm.password);
+                    if (!ForgotPasswordForm.isValidForm()) return;
+                    ForgotPasswordForm.isLoading = true;
+                    final String? errorMessage = await authService.forgotPassword(
+                        ForgotPasswordForm.email);
                     if (errorMessage == null) {
-                      Navigator.pushNamed(context, 'list');
+                      Navigator.pushNamed(context, 'login');
                     } else {
                       print(errorMessage);
                     }
-                    LoginForm.isLoading = false;
                   },
+
           )
         ]),
       ),
